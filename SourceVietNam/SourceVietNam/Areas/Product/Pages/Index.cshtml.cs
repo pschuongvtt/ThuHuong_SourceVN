@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace SourceVietNam.Areas.Product
+namespace SourceVietNam.Areas.Product.Pages
 {
     public class IndexModel : PageModel
     {
