@@ -1,0 +1,113 @@
+﻿@page
+@namespace SourceVietNam_Version02.PaageNew
+@using SourceVietNam_Version02.Pages
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+@*
+    Các cú pháp được sử dụng trong trang RazorPage
+    1. Ký hiệu @BieuThuc. Biểu thức này có thể là biểu thức đơn giản - hay biểu thức phức tạp 
+        Biểu thức phức tạp: @(Biểu thức). Khi được thực thi thì giá trị của biểu thức được xuất ra tại vị trí thực thi biểu thức đó
+        --> Nghĩa là khi thi hành biểu thức xuất ra HTML(encode)
+    Lưu ý: Giá trị có thể là chuỗi khi xuất ra @(System.Math.Round(Math.PI,2)) thì được gọi là "Endcode"
+           < : Thì xuất ra &lt; . VD: @("<h1>")
+           > : Thì xuất ra &gt;   VD: @("<h1>")
+           ....
+
+    2. Thuộc tính HTML: Trong 1 số trường hợp khi xuất ra 1 chuỗi giá trị thì ta thiết lập khi xuất ra nó không encode chuỗi đó
+    Thì khi đó chúng ta sử dụng phương thức của thuộc tính HTML. 
+    Thuộc tính này là 1 đối tượng trong đó có phương thức html.Raw(string)
+    --> Xuất ra nội dung của 1 chuỗi, chuỗi này không được Endcode 
+    
+    3. Nhúng các khối code trong C# bằng phương pháp dùng: 
+    @{
+     + <Code C#>
+     + Mở thẻ HTML --> Xuất HTML 
+     + Phương thức cục bộ
+     + Trong trường hợp chỉ muốn xuất nội dung mà không cần thẻ thì dùng 1 thẻ đặc biệt: Thẻ <text/> hoặc dùng @: <NoiDung>
+    }
+
+    4. Sử dụng cấu trúc điều khiển for, switch case, if else,...
+    @<CautrucCuPhap_DieuKhien>
+    Vd: @if, @for, @foreach, @switch...
+
+    5. Sử dụng phương thức 
+    @functions{
+        Khai báo các thành viên của lớp - Members : Method, Field, Property 
+    }
+
+    6. Thiết lập chỉ thị trang Razor Pages: Dùng @page
+    @page '<thamso_Url>'
+    Mặc định không có tham số, nó tạo ra diểm Endpoint tương ứng vs Tên của trang Razor là: Index
+
+    7. Thiết lập thuộc tính Model của trang Razor, đối tượng lớp được kế thừa từ "PageModel"
+    Khi trang Index.cshtml được khởi chạy thì đối tượng "IndexModel" được khởi tạo trước, sau có mới truyền tới View Index.cshtml
+    Và nó được khởi tạo các phương thức "Handler" OnGet(), OnGetABC(), OnPost(),...
+    @model <TenModel>
+    VD: Gọi sử dụng: <p>@Model.chuoi</p>
+
+    8. Sử dụng namespace
+    Đê khai báo sử dụng namespace của lớp phát sinh trong file _ViewImports dùng chung thư mục: @namespace SourceVietNam_Version02.Pages
+    VD: Nếu khai báo trong Index.cshtml 1 namespace mới: @namespace SourceVietNam_Version02.PaageNew
+    --> Khi đó lớp Model sẽ báo lỗi vì không sử dụng chung namespace này
+    Để khắc phục, dúng từ khóa using theo cú pháp: "@using <TenNamespace_Model>"
+    Tương tư cho khai báo namespace của lớp khác 
+*@
+<h1 class="display-4 text-danger">Content 02 - Cú pháp ASP.NET Razor</h1>
+
+@*VD1: Ký hiệu cho biểu thức*@
+<ul>
+    <li>Giá trị 5+6 là: @(5+6)</li>
+    <li>Giá trị PI được làm tròn là: @(System.Math.Round(Math.PI,2))</li>
+    <li>Giá trị xuất chuỗi dùng thẻ có "<" hoặc ">" là: @("<h1>Xin Chào Các Bạn</h1>") </li>
+</ul>
+
+@*VD2: Sử dụng phương thức Raw của thuộc tính HTML*@
+<ul>
+    <l1>@Html.Raw("<div class = 'alert alert-danger'>Xin Chào Các Bạn - Đây là cú pháp @Html.Raw(string)</div>")</l1>
+</ul>
+
+@*Nhúng các khối code trong C#*@
+@{
+    //Khối code
+    var chuoi = "Xin chào - Đây là khối code trong C#";
+    //Mở thẻ HTML-- > Xuất HTML
+    <p1>@chuoi</p1>
+    //Khai báo phương thức cục bộ
+    void XinChao(string name)
+    {
+        var message = chuoi + " - " + name;
+        <p>@message</p>
+    }
+    //Khai báo thẻ <text/>
+    string[] listSanPham = new string[] { "Iphone", "Nokia", "Samsung XXX" };
+    <br />
+    foreach (var item in listSanPham)
+    {
+        <text>@item  </text>
+    }
+    //Khai báo phương pháp @<NoiDung>
+    <br />
+    foreach (var item in listSanPham)
+    {
+        @: @item
+    }
+}
+<p>@chuoi</p>
+
+@*Gọi phương thức XinChao*@
+@{XinChao("Thu Huong");}
+
+@*VD: Cú pháp cấu trúc điều khiển*@
+@if(20 > 40){<p>Tuổi không được truy cập</p>}
+else {<p>Tuổi được truy cập</p>}
+
+@*VD: Sử dụng phương thức @funtions*@
+@functions{
+    public string title { get; set; } = "Title - Truy cập bởi @function";
+}
+<p>@this.title</p>
+
+@*VD: Sử dụng đối tượng lớp được kế thừa từ PageModel*@
+<p>@Model.chuoi</p>
