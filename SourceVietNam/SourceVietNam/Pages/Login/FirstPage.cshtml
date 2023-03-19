@@ -1,0 +1,161 @@
+﻿@*
+Để file cshtml biết đây là 1 file Razor page thì luôn phải cho biết đây là 1 file @page
+Muốn đổi đường dẫn truy cập Url
+C1: Sử dụng cấu hình viết lại địa chỉ Url truy cập đến RazorPage - RewriteUrl (trong file Program)
+C2: vào trang cshtml sử dụng "@page "URL""
+Truy cập vào trang mà dùng tham số
++ tenthamso-key: Là 1 key request gửi đến thông qua key: tenthamso-key
+@page "/FirstPage/{tenthamso-key}"
++ Trong đó có thể ràng buộc thêm dữ liệu. 
++ Nếu tham số có thể có hoặc k có truy cập được có thể thêm vào dấu ?. Tham số Url này có thể tùy chọn
+@page "/FirstPage/{solanlap-key: int?}"
++Trong Request gửi đến thiết lập solanlap
+int solanlap_url = Int32.Parse((this.Request.RouteValues["solanlap-key"] ?? "0").ToString());
+Lưu ý: Khi trong thư mục Login có trang Index.cshtml thì mặc định Url "/Login/" sẽ truy cập vào trang "/Login/Index.html"
+Lưu ý: Những trang cshtml ngoài lưu trữ trong thư mục "Pages" thì nó còn tổ chức lưu trữ thêm 1 thư mục nữa "Areas" trong các dự án 
+       --> Mục đích lưu trong thư mục "Area" để gom thông tin các trang RazorPage lưu trữ về 1 vấn đề gì đó
+
+Cách thức biên dịch file cshtml 
+1. Về bản chất khi biên dịch, thư viện .NET Razor Page đọc toàn bộ nội dung file.
+2. Sau đó từ nội dung file này xây dựng ra 1 lớp, mà nó có thuộc tính, phương thức. Mà khi chạy nó xuất ra theo nội dung code viết 
+3. Để xem nội dung lớp phát sinh ra: External Source/SourceVietNam.dll/Pages_Login_FirstPage.cshtml.g.cs nó tự động phát sinh ra lớp Page - kế thừa từ phương thức Page
+   Trong đó, nó có xử dụng phương thức ExecuteAsync{}, phương thức bất đồng bộ phương thức xây dựng thep kiến trúc code 
+4. Nếu muốn khai báo vào trong lớp phát sinh ra FirstPage.cshtml.g.cs có những phương thức với thuộc tính như những lớp khác: 
+   Dùng chỉ thị có tên là: @function {}
+   Thuộc tính này có thể truy cập toán tử "this" ở bất kì đâu 
+*@
+@page "/TrangThu1/{solanlap-key:int?}"
+
+@*Sử dụng thông tin Model của FirstPageModel
+  Sử dụng chỉ thị @ tướng ứng cho Lớp FirstPageModel
+  Để truy cập được sử dụng model thì lớp FirstPageModel khai báo hương thức, thuộc tính dùng "public" 
+  Ngoài ra được gọi trong View .cshtml với thông tin @Model.TenBien
+*@
+@model SourceVietNam.Pages.Login.FirstPageModel
+
+@*Trong các trang RazorPage để hỗ trợ phát sinh các HTML thì nó hỗ trợ 1 cái là TagHelper
+Đây là những cú pháp phác thảo ra nội dung của HTML, thông thường nó sẽ thiết lập các thuộc tính trong thẻ HTML
+@addTagHelper: Nạp các TagHelper mặc định vào trang RazorPage 
+Có rất nhiều TagHelper phát sinh ra địa chỉ Url trong đó có thẻ <a/> phát sinh liên kết
+*@
+@*@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers; *@
+
+@*Sử dụng Layout thiết lập
+  Có 3 file FristPage, SecondPage, ThirdPage muốn sử dụng chung fiel _MyLayout
+  Nhưng không muốn phải vào khai báo @{Layout="_MyLayout"}. Thì có thể khai báo 1 _ViewStart.cshtml
+  _ViewStart.cshtml thiết lập tùy theo có thể cho thư mục Login,... Thì tạo file đúng theo vị trí đó
+  Nội dung file _ViewStart.cshtml tự động được chèn vào phần đầu khi gọi file FirstPage, SecondPage.cshtml,...
+*@
+@{
+    //Layout = "_LoginLayout";
+}
+
+@*Nhúng 1 khối code C# vào thì dùng @{<Khối thực thi>}*@
+@{
+    //Khai báo biến kiểu int 
+    int a = 2, b = 3, solanlap = 5;
+
+    //Đọc số lần lặp từ Request - Lấy đúng tên tham số solanlap-key
+    int solanlap_url = Int32.Parse((this.Request.RouteValues["solanlap-key"]??"0").ToString());
+
+    //Nhúng html trong code C#
+    <span>Căn bậc 2 của a = @a là: (@Math.Sqrt(a))</span>
+}
+
+@*Để xuất thông tin dữ liệu từ file Razor, truy xuất thông tin qua: 
+  + @tenbien
+  + @tenbieuthuc
+  + @phuongthuc
+*@
+<h1>Trang Thông tin Razor Page - Trang thứ 1</h1>
+<h3>Thu Hương - @System.DateTime.Now </h3>
+
+@*Nhúng C# trong HTML*@
+<p>Tong của @a và @b là @(a+b)</p>
+@for (int i = 0; i < solanlap_url; i++)
+{
+    //Nhúng HTML trong C#
+    <li>Mục thứ @(i+1)</li>
+}
+
+@*
+Sử dụng TagHelper cho thẻ a
+Nếu mỗi lần truy cập vào trang thứ 2 mà chỉnh sửa Url thì phải tự động cập nhật lại trực tiếp Url
+-> Thay vào đó có thể sử dụng TagHelper cho thẻ a dùng thuộc tính "asp-page" tự phát sinh Url truy cập đến SecondPage.cshtml
+C1: <a href="/TrangThu2">Truy cập trang login - second page</a>
+C2: <a asp-page="SecondPage.cshtml">Truy cập trang login - second page</a>
+
+*@
+<a asp-page="SecondPage">Truy cập trang login - second page</a>
+
+@*
+Cách thức biên dịch file cshtml
+1. Về bản chất khi biên dịch, thư viện .NET Razor Page đọc toàn bộ nội dung file.
+2. Sau đó từ nội dung file này xây dựng ra 1 lớp, mà nó có thuộc tính, phương thức. Mà khi chạy nó xuất ra theo nội dung code viết
+3. Để xem nội dung lớp phát sinh ra: External Source/SourceVietNam.dll/Pages_Login_FirstPage.cshtml.g.cs nó tự động phát sinh ra lớp Page - kế thừa từ phương thức Page
+   Trong đó, nó có xử dụng phương thức ExecuteAsync{}, phương thức bất đồng bộ phương thức xây dựng thep kiến trúc code
+4. Nếu muốn khai báo vào trong lớp phát sinh ra FirstPage.cshtml.g.cs có những phương thức với thuộc tính như những lớp khác:
+   Dùng chỉ thị có tên là: @function {}
+*@
+@functions{
+    //Khai báo những thuộc tính phương thức mà lớp phát sinh FirstPage.cshtml.g.cs sẽ có 
+    string title { get; set; } = "Đây là trang Razor FirstPage";
+    //Tương tự như thuộc tính có thể đưa vào lớp phát sinh này bằng phương thức
+    string WelCome (string name)
+    {
+        return "Chào mừng bạn " + name + " - Đây là phương thức được gọi";
+    }
+
+    @*Khai báo phương thức với :
+    + Phạm vi truy cập là public
+    + Trả về kiểu gì đó
+    + Tên phương thức bắt đầu bằng OnGet, OnGetABC, OnGetXyz,... ,OnPost(), OnPostXYZ(),...
+    -> Các phương thức này gọi là "Handler"
+    Trong đó hàm OnGet tự động được gọi khi truy vấn đến trang bằng địa chỉ Url @page "/TrangThu1/{solanlap-key:int?}" và truy vấn bằng phương thức Get"
+    Phương thức Get được chạy đầu tiên 
+    *@
+
+    //public void OnGet()
+    //{
+    //    Console.WriteLine("Truy cập phương thức Get trang FirsrPage");
+    //    ViewData["MyData"] = "Thu Hương - Dùng Hàm OnGet()";
+    //}
+}
+
+@*Thuộc tính Title này có thể được khai báo sử dụng bất kỳ đâu thông qua từ khóa "this"
+  + Đọc thông tin biến title từ function thông qua từ khóa this. Vd: @this.title - Gọi call từ function
+  + Có thể gọi phương thức ở bất kỳ đâu
+*@
+<h4>@this.title - Gọi call từ function </h4>
+<p>@this.WelCome("Thu Hương")</p>
+
+@*Trong khái niệm lớp phát sinh RazorPage FirstPage.cshtml.g.cs kế thừa lớp Page
+  Bên trong mặc định có chứa thông tin 1 biến thuộc tính ViewData. Đối tượng này chứa dữ liệu dùng để truyền giữa các phương thức được sử dụng cshtml 
+  Những dữ liệu này được lưu trữ trong ViewData = key.
+  Ta có thể truy cập bằng cách viết là: ViewData["MyData"]
+  vd: 
+    + Sau khi in xong title thì tạo ra thẻ h2, nội dung thẻ h2 đọc trong thuộc tính "ViewData"" với dữ liệu key = "MyData"
+    + Dữ liệu "MyData" chưa được thiết lập, thì khai báo thông qua @{ViewData["My"]  
+*@
+
+@*Khai báo phương thức với :
+    + Phạm vi truy cập là public
+    + Trả về kiểu gì đó
+    + Tên phương thức bắt đầu bằng OnGet, OnGetABC, OnGetXyz,... ,OnPost(), OnPostXYZ(),...
+    -> Các phương thức này gọi là "Handler"
+    Trong đó hàm OnGet tự động được gọi khi truy vấn đến trang bằng địa chỉ Url @page "/TrangThu1/{solanlap-key:int?}" và truy vấn bằng phương thức Get"
+    Phương thức Get được chạy đầu tiên
+*@
+<h4>@ViewData["MyData"]</h4>
+
+@{
+    ViewData["MyData"] = "Thu Hương - Dùng View Data";
+}
+<h4>@ViewData["MyData"]</h4>
+
+@*Sử dụng thông tin Model của FirstPageModel
+  Sử dụng chỉ thị @ tướng ứng cho Lớp FirstPageModel
+  Để truy cập được sử dụng model thì lớp FirstPageModel khai báo hương thức, thuộc tính dùng "public"
+  Ngoài ra được gọi trong View .cshtml với thông tin @Model.TenBien / @Model.TenPhuongThuc()
+*@
+<h5>@Model.Content</h5>

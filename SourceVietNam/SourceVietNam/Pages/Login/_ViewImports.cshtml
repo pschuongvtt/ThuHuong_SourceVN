@@ -1,0 +1,13 @@
+﻿@*Có 3 file FristPage, SecondPage, ThirdPage muốn sử dụng chung fiel _MyLayout
+  Nhưng không muốn phải vào khai báo @{Layout="_MyLayout"}. Thì có thể khai báo 1 _ViewStart.cshtml
+  _ViewStart.cshtml thiết lập tùy theo có thể cho thư mục Login,... Thì tạo file đúng theo vị trí đó
+  Nội dung file _ViewStart.cshtml tự động được chèn vào phần đầu khi gọi file FirstPage, SecondPage.cshtml,...
+
+  Ngoài ra còn có file _ViewImport.cshtml, tương tự như _ViewStart.cshtml cũng được tự động chèn vào phần đầu của các file khác
+  Tuy nhiên, file này chỉ chấp nhận đưa vào các chỉ thị như:
+  + TagHelper: @addTagHelper
+  + Using: @using
+  + Inject: @inject
+  ...
+*@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers;

@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+@*Khi tạo ra trang Razor Page và khi trang RazorPage .cshtml thi hành thì nó sẽ phát sinh code theo cấu trúc được trình bày
+  -> Toàn bộ codne sẽ được trả về cho Client
+  Mong muốn: Toàn bộ code của trang RazorPage do code phát sinh này, nó không trả trực tiếp về cho Client
+             Mà nó được chuyển đến trang .cshtml khác, trang html khác này sẽ phát sinh code và trả về cho Client
+             --> Việc tổ chức trong ứng dụng ASP.NET được gọi là _Layout 
+  Thông thường, trong thư mục Pages sẽ tạo thêm thư mục "Shared". 
+  Trong thư mục này chứa file .cshtml như là 1 "Layout" 
+  Khi đặt tên file Layout thì thêm _ VD: _MyLayout để khi chạy EndPoint Routing nó biết không sử dụng file này làm điểm EndPoint
+  Trang Layout này có vai trò dùng để tạo bố cục, chèn nội dung từ RazorPage vào khu vực nào đó
+  VD: Có bố cục nội dung header, nav, footer,... 
+  Chỗ nào trong file Razor muốn chèn dữ liệu vào thì thêm @RenderBody
+  Thiết lập file FirstPage.cshtml sử dụng file _Layout thì dùng 
+  @{
+    Layout = "TenLayout";
+  }
+  Việc truyền dữ liệu giữa FisrtPage.cshtml và _Layout.cshtml thì có thể sử dụng đối tượng "ViewData"
+  @{
+    Layout = "TenLayout";
+    ViewData["Content"] = "FisrtPage - Data"
+  }
+  Còn trang _Layout gọi ViewDat["Content"] thông qua @ViewData["Content"]
+*@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div style="background-color: burlywood;">Header</div>
+    <div>
+        @*Chỗ nào trong file Razor muốn chèn dữ liệu vào thì thêm @RenderBody*@
+        @RenderBody()
+    </div>
+    <div style="background-color: burlywood;">Footer</div>
+</body>
+</html>

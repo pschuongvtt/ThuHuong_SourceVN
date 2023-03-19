@@ -1,0 +1,21 @@
+﻿@page "/LogIn"
+@model SourceVietNam.Areas.User.LoginModel
+@{
+}
+
+@*Khai báo thông tin TagHelper để sử dụng*@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<h1>User - Thông tin User</h1>
+
+@*Truy cập đường link trỏ đến trang Sản phẩm mới trong thư mục Areas/Product/SanPham
+Mặc định asp-page="/SanPham" sẽ trỏ đến thư mục sản phẩm trong thư mục page 
+Nếu muốn trỏ thông tin đến trang SanPham thư mục Areas thì thêm "asp-area="Product""
++ asp-page: Trang RazorPage muốn trỏ đến 
++ asp-area: Khu vực lưu trữ trang RazorPage muốn trỏ đến
++ asp-host: Trỏ đến Host nào
++ asp-route: Trỏ đến route nào 
++ asp-cotroller: Trỏ đến controller nào
+*@
+
+<a asp-page="/SanPham" asp-area="Product" >Thông tin sản phẩm</a>
