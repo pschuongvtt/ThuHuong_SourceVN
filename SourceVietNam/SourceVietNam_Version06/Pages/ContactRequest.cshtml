@@ -1,0 +1,49 @@
+﻿@page
+@model SourceVietNam_Version06.Pages.ContactRequestModel
+
+@{
+    //Thiết lập Title của trang. Trang _Layout gọi thông tin thuộc tính này
+    ViewData["Title"] = "Trang liên hệ";
+}
+@*
+    Hai vấn đề được dùng
+    1. PageModel: Dùng PageModel được sử dụng trong các trang RazorPage
+    + Các trang Razor phải có tối thiểu 1 trang .cshtml, có thỉ thị là "@page"
+    + Thiết lập Title của trang. Trang _Layout gọi thông tin thuộc tính này thông qua:
+    ViewData["Title"] = "Trang liên hệ";
+    + Xem thông tin lớp phát sinh trong "External Sources". Trong đó có thể khai báo phương thức trong Razor sẽ xuất hiện trong file phát sinh tương ứng
+    @funtions{
+        <Khai báo thuộc tính , phương thức>
+    }
+    Gọi thông tin lớp phát sinh này thông qua @<thuộc tính , phương thức>
+    + Trong Razor để xem, gọi thông tin lớp phát sinh trong "External Sources" thì khai báo 1 lớp riêng kế thừa từ lớp: "PageModel"
+    Lớp này được liên kết với trang Razor thông qua chỉ thị Model: @model <TenLop>. Khai báo tương ứng cho trang RazorPage
+    --> Nó biết được dữ liệu truyền đến View là lớp Contact và được gọi thông qua đối tượng "@this.Model.<TenBien>" hoặc ""@this.Model.<TenPhuongThuc>""
+    --> Khi chạy nếu báo lỗi do "không kế thừa từ lớp PageModel" vì "model = null"", thì model này thiết lập dữ liệu truyền đến model, đối tượng thuộc lớp gì, chứ không khởi tạo được đối tương Contact
+        Thao tác truyền dữ liệu đến Model thường được thực hiện trong các "Action của Controller"."
+        Vì vậy, nếu lớp Model có kế thừa từ PageModel], trang Razor lại có khai báo chỉ thị "@model <tenModel>" thì ASP.NET sẽ tự động liên kết đến RazorPage .cshtml và lớp PageModel.
+        Khi đó, khi truy cập nó sẽ tự động khởi tạo ra 1 đối tượng lớp kế thừa từ lớp PageModel và gán vào biến @model khởi tạo được biến @chuoi
+    Do vậy, có thể phân tách code vừa ở trong View, vừa ở trong Model. View chỉ hiển thị dữ liệu của Model, còn
+
+    2. Model Binding: Cơ chế ánh xạ liên kết dữ liệu giữa View và Model
+
+
+*@
+<h1 class="display-4">Trang liên hệ</h1>
+<p class="lead">Điền các thông tin liên hệ</p>
+<br />
+
+@*Khai báo thông tin xuất hiện trong lớp phát sinh trong "External Sources"*@
+@functions {
+    public string UserId { get; set; } = "User ID ...";
+    public double TinhTong(double a, double b)
+    {
+        return a + b;
+    }
+}
+@*Gọi thông tin trong lớp phát sinh trong "External Sources""*@
+<p>Xuất thông tin UserID: @UserId</p>
+<p>Tính tổng 7+8 là: @TinhTong(7,8)</p>
+
+@*Gọi thông tin Model từ lớp ContactRequest.cshtml.cs được kế thừa từ PageModel*@
+@this.Model.chuoi

@@ -1,0 +1,57 @@
+﻿@page "/Product/{id:int?}"
+@model SourceVietNam_Version06.Pages.ProductPagesModel
+@{
+    //Khai báo biến được tạo ra từ việc truy cập vào Model biến product 
+    var product = Model.product;
+    var lsProduct = Model._productService.AllProduct();
+
+}
+@*Đọc thông tin từ Model ProductPages.cshtml.cs*@
+<h1>@ViewData["Title"]</h1>
+
+@*Đọc thông tin từ Model ProductPages.cshtml.cs - Đọc thông tin từ Url*@
+<h4>@ViewData["Content"]</h4>
+
+@*Kiểm tra nếu product != null thì hiển thị nội dung của produtc. Ngược lại, hiển thị danh sách lsProduct*@
+@if(product!=null)
+{
+    <h1>@product.Name</h1>
+    <p>Description: @product.Description</p>
+    <p>Giá: @product.Price</p>
+    <p>
+        <a asp-page="ProductPages" asp-route-id="">Danh sách các sản phẩm</a>
+    </p>
+    @*Khi đang xem 1 sản phẩm cho nút bấm xóa sản phẩm dùng phương thức Post. Khi nó đang xem, xây dựng 1 form để submit dữ liệu
+      + asp-page: Post đến địa chị Url nào cho thêm tham số 
+      + asp-page-handler: Phương thức xây dựng cho Handler 
+      + asp-route-id: Id sản phẩm đang xem
+      Xây dựng button type loại là submit
+    *@
+    <form method="post" asp-page="ProductPages" asp-page-handler="Delete" asp-route-id="@product.Id">
+        <button type="submit" class="btn btn-info">Xóa sản phẩm</button>
+    </form>
+}
+else
+{
+    @*Ngược lại thì đọc danh sách các sản phẩm *@
+    <ul>
+        @foreach (var p in lsProduct)
+        {
+            @*Tạo các link trỏ đến đến đúng theo từng loại Id*@
+            <li>
+                <a asp-page="ProductPages" asp-route-id="@p.Id">@p.Name</a>
+            </li>
+        }
+    </ul>
+}
+
+<hr/>
+
+<p>
+    @*Thiết lập thẻ a truy cập theo phương thức OnGetLastProduct(). Thiết kế thẻ a là 1 nút bấm button*@
+    <a class="btn btn-primary" asp-page="ProductPages" asp-page-handler="lastproduct">Sản phẩm cuối</a>
+    @*Thiết lập thẻ a truy cập theo phương thức OnGetRemoveAll(). Thiết kế thẻ a là 1 nút bấm button*@
+    <a class="btn btn-danger" asp-page="ProductPages" asp-page-handler="removeall">Xóa sản phẩm</a>
+    @*Thiết lập thẻ a truy cập theo phương thức OnGetLoadAll(). Thiết kế thẻ a là 1 nút bấm button*@
+    <a class="btn btn-success" asp-page="ProductPages" asp-page-handler="loadall">Nạp danh sách các sản phẩm</a>
+</p>
