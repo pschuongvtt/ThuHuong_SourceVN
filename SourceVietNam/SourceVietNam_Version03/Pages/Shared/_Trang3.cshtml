@@ -1,0 +1,36 @@
+﻿@*
+1. Tạo ra các Layout lồng nhau
+Trang3.cshtml gọi layout _Trang3.cshtml
+Muốn chèn nội dung của layout _Trang3.cshtml chèn ngược lại từ _Layout chính là _MyLayout
+Bằng cách: Thiết lập gọi ngược lại layout _MyLayout.cshtml 
+@{
+    Layout = "_MyLayout";
+}
+--> Khi truy cập vào Trảng.cshtml, thì toàn bộ nội dung nó sinh ra sẽ được chèn vào _Trang3.cshtml
+    Sau đó toàn bộ nội dung của _Trang3.cshtml được chèn vào nội dung của _MyLayout.cshtml 
+    Sau đó lúc này mới trả về cho Client
+2. Tạo ra các section lồng nhau 
+
+*@
+@{
+    Layout = "_MyLayout";
+}
+@*Sử dụng bootstap chia lưới thành 2 cột*@
+<div class="row">
+    <div class="col-3">
+        Trình bày Menu trái 
+    </div>
+    <div class="col-9">
+        @*Nội dung chính của bài viết*@
+        @RenderBody()
+    </div>
+</div>
+
+@*Tạo ra các section lồng nhau 
+  @section NoiDungFooter {} : Trả về cho layout _MyLayout
+*@
+@section NoiDungFooter {
+    @*Render ra NoiDungFooter cho Trang3.cshtml gọi*@
+    @await RenderSectionAsync("NoiDungFooter", required: true)
+}
+

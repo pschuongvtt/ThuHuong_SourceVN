@@ -1,0 +1,356 @@
+﻿@page
+@{
+    Layout = "_HomePageLayout";
+}
+@model SourceVietnam.Pages.Products.ProductDetailModel
+@{
+    ViewData["Title"] = "Product detail";
+}
+
+<link href="~/css/products/product-detail.css" rel="stylesheet" />
+
+<div class="pro-nav">
+    <div class="pro-menu">
+        <div class="pro-menu__product">Product</div>
+        <div class="pro-menu__manufacture">Manufactures</div>
+    </div>
+    <div class="pro-lang-currency">
+        <div class="pro-lang">VI/ENG</div>
+        <div class="pro-currency">USD</div>
+    </div>   
+</div>
+<div class="pro-menu__line"></div>
+<div class="pro-menu__line-product"></div>
+
+<div class="row pro-info">
+    <div class="col-xl-5 col-lg-5 col-md-4 col-sm-6 col-6 pro-info__img">
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="pro-info__img-container">
+                    <img class="pro-info__img-style mg-fluid" src="~/images/product.png" />
+                    <div class="pro-info__number-img">
+                        1/9
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+
+
+                <div id="carouselExampleControls" class="carousel" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="card">
+                                <div class="img-wrapper">
+                                    <img class="pro-info__carousel" src="~/images/carousel.png" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="card">
+                                <div class="img-wrapper">
+                                    <img class="pro-info__carousel" src="~/images/carousel.png" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="card">
+                                <div class="img-wrapper">
+                                    <img class="pro-info__carousel" class="pro-info__carousel" src="~/images/carousel.png" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="card">
+                                <div class="img-wrapper">
+                                    <img class="pro-info__carousel" src="~/images/carousel.png" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="card">
+                                <div class="img-wrapper">
+                                    <img class="pro-info__carousel" src="~/images/carousel.png" />
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="card">
+                                <div class="img-wrapper">
+                                    <img class="pro-info__carousel" src="~/images/carousel.png" />
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-7 col-lg-7 col-md-8 col-sm-6 col-6">
+        <div class="row">
+            <div class="col-xl-12">
+                <p class="pro-info__product-name">
+                    Original Perfume Oud Wood eau de parfum Long time Original Perfume Oud Wood eau de parfum Long time Original Perfume Oud Wood eau de parfum Long time
+                </p>
+                <p class="pro-info__view">299 Views</p>
+            </div>
+        </div>
+        <div class="row pro-info__magrin-top">
+            <div class="col-xl-2">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                        <span class="pro-info__title">Variant</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-10">             
+                <div class="row">
+                    <div class="pro-info__variant-container">
+                        <button class="btn btn-primary btn__variant pro-info__variant">Size S Mau trang</button>
+                        <button class="btn btn-primary btn__variant pro-info__variant">Size S</button>
+                        <button class="btn btn-primary btn__variant pro-info__variant">Size S</button>
+                        <button class="btn btn-primary btn__variant pro-info__variant">Size S</button>
+                        <button class="btn btn-primary btn__variant pro-info__variant">Size XL den</button>
+                        <button class="btn btn-primary btn__variant pro-info__variant">Size S</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row pro-info__magrin-top pro-info-tbl-container">
+            <div class="row">
+                <div class="col-xl-2">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                            <p class="pro-info__title">Price</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-10">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                            <table class="table table-bordered pro-info__price-table">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Quantity</th>
+                                        <td>From 10</td>
+                                        <td>From 50</td>
+                                        <td>From 100</td>
+                                        <td>From 150</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Price</th>
+                                        <td>$99</td>
+                                        <td>$99</td>
+                                        <td>$99</td>
+                                        <td>$99</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pro-info__quote-container">
+            <div class="row">
+                <div class="col-xl-2">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-10">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 d-grid gap-2 d-md-block">
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-primary btn-base btn__get-quote" type="button">Get Quote</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="row pro-manufacture">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 pro-manufacture__container">
+        <div class="pro-manufacture__logo">
+            <img class="pro-manufacture__img" src="~/images/manufacture-logo.png" />
+        </div>
+        <div class="pro-manufacture__info">
+            <div class="pro-manufacture__name">Nantong Sinomusic Enterprise Limited</div>
+            <div class="pro-manufacture__active">Active 2 hours ago</div>
+        </div>
+        <div class="pro-manufacture_view">
+            <button class="btn btn-primary btn-manufacture__view-company"> <i class="far fa-building"></i> View Company</button>
+        </div>
+        <div>
+            <button class="btn btn-primary pro-manufacture__chat"> <i class="far fa-comments"></i> Chat</button>
+        </div>
+    </div>
+</div>
+<div class="row pro-description">
+    <span class="pro-description-title">PRODUCT DESCRIPTION</span>
+</div>
+<div class="row pro-detail">
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+            <span class="pro-detail-category">Category:</span><span class="pro-detail__cat-name">Men Fashion</span>
+            <hr class="pro-detail__hr" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+            <b>What is Lorem Ipsum? </b><br />
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            Why do we use it?
+            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+            <img class="mx-auto d-block" style="width:100%; height:592px" src="~/images/product.png" />
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+            <img class="mx-auto d-block" style="width:100%; height:592px" src="~/images/product.png" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+            <b>What is Lorem Ipsum? </b><br />
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            Why do we use it?
+            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+        </div>
+    </div>
+    <div class="row">
+        <img class="mx-auto d-block" style="width:100%; height:592px" src="~/images/product.png" />
+    </div>
+</div>
+
+<div class="row pro-description">
+    <div class="pro-similar__title">
+        <div class="pro-description-title">SIMILAR PRODUCT</div>
+        <div class=""><i class="fas fa-greater-than icon__greater-than"></i> </div>
+    </div>
+
+</div>
+<div class="row pro-similar">
+
+    <div class="pro-similar-container">
+        <div class="col-lg-2 col-md-2 col-sm-4">
+            <div class="card pro-similar__card">
+                <div class="pro-similar__card-img">
+                    <img class="mx-auto d-block pro-similar__img" src="~/images/carousel.png" />
+                    <div class="pro-similar__quote"> <button class="btn btn-primary pro-similar__btn-quote"> <i class="fas fa-comments pro-similar__quote-icon"></i> Get Quote</button> </div>
+                </div>
+                <div class="pro-similar__card-body">
+                    <p class="pro-similar__card-title">Sample product name - 01 insert here</p>
+                    <p class="pro-similar__card-price">
+                        $99.99 - $1000
+                    </p>
+                    <p class="pro-similar__card-stock">MOQ: 5 pieces</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-4">
+            <div class="card pro-similar__card">
+                <div class="pro-similar__card-img">
+                    <img class="mx-auto d-block pro-similar__img" src="~/images/carousel.png" />
+                    <div class="pro-similar__quote"> <button class="btn btn-primary pro-similar__btn-quote"> <i class="fas fa-comments pro-similar__quote-icon"></i> Get Quote</button> </div>
+                </div>
+                <div class="pro-similar__card-body">
+                    <p class="pro-similar__card-title">Sample product name - 01 insert here</p>
+                    <p class="pro-similar__card-price">
+                        $99.99 - $1000
+                    </p>
+                    <p class="pro-similar__card-stock">MOQ: 5 pieces</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-4">
+            <div class="card pro-similar__card">
+                <div class="pro-similar__card-img">
+                    <img class="mx-auto d-block pro-similar__img" src="~/images/carousel.png" />
+                    <div class="pro-similar__quote"> <button class="btn btn-primary pro-similar__btn-quote"> <i class="fas fa-comments pro-similar__quote-icon"></i> Get Quote</button> </div>
+                </div>
+                <div class="pro-similar__card-body">
+                    <p class="pro-similar__card-title">Sample product name - 01 insert here</p>
+                    <p class="pro-similar__card-price">
+                        $99.99 - $1000
+                    </p>
+                    <p class="pro-similar__card-stock">MOQ: 5 pieces</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-4">
+            <div class="card pro-similar__card">
+                <div class="pro-similar__card-img">
+                    <img class="mx-auto d-block pro-similar__img" src="~/images/carousel.png" />
+                    <div class="pro-similar__quote"> <button class="btn btn-primary pro-similar__btn-quote"> <i class="fas fa-comments pro-similar__quote-icon"></i> Get Quote</button> </div>
+                </div>
+                <div class="pro-similar__card-body">
+                    <p class="pro-similar__card-title">Sample product name - 01 insert here</p>
+                    <p class="pro-similar__card-price">
+                        $99.99 - $1000
+                    </p>
+                    <p class="pro-similar__card-stock">MOQ: 5 pieces</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-4">
+            <div class="card pro-similar__card">
+                <div class="pro-similar__card-img">
+                    <img class="mx-auto d-block pro-similar__img" src="~/images/carousel.png" />
+                    <div class="pro-similar__quote"> <button class="btn btn-primary pro-similar__btn-quote"> <i class="fas fa-comments pro-similar__quote-icon"></i> Get Quote</button> </div>
+                </div>
+                <div class="pro-similar__card-body">
+                    <p class="pro-similar__card-title">Sample product name - 01 insert here</p>
+                    <p class="pro-similar__card-price">
+                        $99.99 - $1000
+                    </p>
+                    <p class="pro-similar__card-stock">MOQ: 5 pieces</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-4">
+            <div class="card pro-similar__card">
+                <div class="pro-similar__card-img">
+                    <img class="mx-auto d-block pro-similar__img" src="~/images/carousel.png" />
+                    <div class="pro-similar__quote"> <button class="btn btn-primary pro-similar__btn-quote"> <i class="fas fa-comments pro-similar__quote-icon"></i> Get Quote</button> </div>
+                </div>
+                <div class="pro-similar__card-body">
+                    <p class="pro-similar__card-title">Sample product name - 01 insert here</p>
+                    <p class="pro-similar__card-price">
+                        $99.99 - $1000
+                    </p>
+                    <p class="pro-similar__card-stock">MOQ: 5 pieces</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts
+    {
+    <script src="~/js/products/product-detail.js"></script>
+}

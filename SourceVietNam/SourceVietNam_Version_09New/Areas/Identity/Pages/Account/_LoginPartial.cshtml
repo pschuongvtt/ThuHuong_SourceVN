@@ -1,0 +1,52 @@
+﻿@*
+Thiết kế Partial cho Login
++ Kiểm tra trong _LoginPartial này, nếu User chưa Đăng nhập thì mới hiển thị thông tin 2 mục SignUp và SignIn
+  Nếu đã đăng nhập rồi thì "hiện thị thông tin của User"" và nút "LogOut"
++ Sử dụng các dịch vụ Identity 
+SignInManager: Dịch vụ liên quan đến chức năng SignIn cho Model <AppUser>: SignInManager<AppUser> 
+UserManager: Dịch vụ quản lý User cho Model <AppUser>: UserManager<AppUser>
+--> Từ 2 Model này, có thể đọc thông tin của 1 User, kiểm tra xem User có đang đăng nhập nhập. Nếu đăng nhập thì thông tin User đăng nhập
+--> Inject dịch vụ vào PageModel
+Để Inject dịch vụ vào View thì sử dụng: @inject SignInManager<AppUser> <TenBien>
+--> Vấn đề trong các Controller, PageModel: Đều có 1 property: System.Security.Claims.ClaimsPrincipal PageModel.User: Chứa thông tin của User thông qua truy cập this.User 
+    Vì do việc thiết lập middleware: app.useAuthentication() và app.useAuthorization()
+    Từ property "this.User" này, có thể sử dụng dịch vụ SignInManager để kiểm tra User đăng nhập hoặc k phải User đăng nhập. User này luôn có sẵn trong PageModel, Controller, View,... 
+    Kiểm tra User có đăng nhập hay chưa dùng phương thức: @{ ignInManager.IsSignedIn(User) }
+    Hầu hết sử dụng dịch vụ UserManager: VD: Lấy tên User: UserManager.GetUserName(User)
+Sau khi Logout, không Login lại được do sau khi hoàn thành đăng ký thì tự động LogIn. Lần LogIn tiếp theo phải xác thực email mới đăng nhập được (Program.cs): options.SignIn.RequireConfirmedEmail = true;
+Trong ứng dụng đăng ký dịch vụ gửi Email - EmailSender: Install Pakage: MailKit và MimeKit
+1. Tạo thư mục MailService 
+2. Cấu hình Mail trong appsettings.json
+3. Thiết lập thông tin trong SenMailService.cs
+4. Khi có dịch vụ SenMailService.cs, thì phải đăng ký vs tên IEmailSender thì Identity ms sử dụng. Đăng ký dịch vụ trong Program.cs
+
+
+*@
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+<ul class="navbar-nav">
+    @*Kiểm tra User có đang đăng nhập hay chưa*@
+    @if (SignInManager.IsSignedIn(User))
+    {
+        @*Tạo link trỏ đến thư mục /Identity/Account/Manage cho dòng chữ hiển thị "Tên của User"*@
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-page="/Account/Manage/Index" asp-area="Identity">@UserManager.GetUserName(User)!</a>
+        </li>
+        @*Tạo link trỏ đến thư mục /Identity/Account/LogOut cho SignUp*@
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-page="/Account/LogOut" asp-area="Identity">LogOut</a>
+        </li>
+    }
+    else
+    {
+        @*Tạo link trỏ đến thư mục /Identity/Account/Register cho SignUp*@
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-page="/Account/Register" asp-area="Identity">SignUp</a>
+        </li>
+        @*Tạo link trỏ đến thư mục /Identity/Account/LogIn cho SignIn*@
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-page="/Account/Login" asp-area="Identity">SignIn</a>
+        </li>
+    }
+</ul>

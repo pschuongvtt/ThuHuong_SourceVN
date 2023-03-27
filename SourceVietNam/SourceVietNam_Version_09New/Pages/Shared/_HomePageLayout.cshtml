@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/fonts/fontawesome-free-5.15.4-web/css/all.min.css" rel="stylesheet" />
+    <link href="~/css/homepage-layout.css" rel="stylesheet" />
+</head>
+<body class="body-style">
+    <header>
+        <nav class="navbar-sec">
+            <div class="navbar-container">
+                <input type="checkbox" name="" id="">
+                <div class="hamburger-lines">
+                    <span class="line line1"></span>
+                    <span class="line line2"></span>
+                    <span class="line line3"></span>
+                </div>
+                <ul class="menu-items">
+                    <li class="nav__navbar-user">
+                        <i class="fas fa-user nav__nabar-user-icon"></i>
+                    </li>
+
+                    <li class="nav__navbar-language">
+                        <a class="nav__navbar-text active-text" asp-area="" asp-page="/Index">EN</a>
+                        -
+                        <a class=" nav__navbar-text" asp-area="" asp-page="/Index">VI</a>
+                    </li>
+                    <li class="nav__navbar-currency">
+                        <a class="nav__navbar-text active-text" asp-area="" asp-page="/Index">USD</a>
+                        -
+                        <a class="nav__navbar-text" asp-area="" asp-page="/Index">VND</a>
+                    </li>
+                </ul>
+                <a class="navbar__achor-logo" asp-area="" asp-page="/Index"><img class="navbar__logo" src="~/images/logo-banner/logo-sourcevietnam.svg" /></a>
+                <span class="navbar__sp-seller-center">|</span>
+                <a class="navbar__ach-seller-center" asp-area="" asp-page="/Index"><i class="fas fa-store nav__navbar-store-icon"></i> Go to Seller Center</a>
+
+                <div class="nav__search-bar">
+                    <input type="text" class="nav__search-bar-text" placeholder="Search here...">
+                    <i class="fas fa-search nav__search-bar-icon"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="header__banner header_banner-image">
+        <div class="header__banner-menu">
+            <a class="header__banner_a" asp-area="" asp-page="/Products/ProductDetail">Product</a>
+            <a class="header__banner_a" asp-area="" asp-page="/homepage">Manufacture</a>
+        </div>
+        <div class="header__banner-search-bar">
+            <input type="text" class="header__banner-search-text" placeholder="Search here...">
+            <i class="fas fa-search header__banner-search-icon"></i>
+        </div>
+    </div>
+
+    @*<div class="container">*@
+    <div class="container body_container">
+        @*<div class="body_container">*@
+            @*<main role="main" class="pb-3 body-content">*@
+            @RenderBody()
+            @*</main>*@
+            @*</div>*@
+           
+        @*</div>*@
+    </div>
+
+   
+
+    <footer class="border-top footer text-muted footer-style">
+        <div class="footer__container">
+            <div class="footer__container-customer-service">
+                <div class="footer__container-text-title">Customer Sevices</div>
+                <ul>
+                    <li class="footer__text">Help center</li>
+                    <li class="footer__text">Feedback</li>
+                    <li class="footer__text">Contact us</li>
+                </ul>
+            </div>
+
+            <div class="footer__container-about-us">
+                <div class="footer__container-text-title">About Source Vietnam</div>
+                <ul>
+                    <li class="footer__text">About us</li>
+                    <li class="footer__text">Legal notice</li>
+                    <li class="footer__text">Term & Condition</li>
+                    <li class="footer__text">Policy</li>
+                </ul>
+            </div>
+
+            <div class="footer__container-source-vietnam">
+                <div class="">
+                    <a><img class="footer__logo" src="~/images/logo-banner/logo-sourcevietnam_vertical.svg" /></a>
+                </div>
+                <div class="footer__text"><a class="footer__achor footer__text" href="www.sourcevietnam.com">www.sourcevietnam.com</a></div>
+                <div class="footer__text"><a class="footer__achor footer__text" href="www.commercefinder.com">www.commercefinder.com</a></div>
+                <div class="footer__text">Phone: 028 7303 0800</div>
+                <div class="footer__text">Address: 60A Truong Son, Ward 2, Tan Binh, Ho Chi Minh City</div>
+
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

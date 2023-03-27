@@ -1,0 +1,43 @@
+﻿@*
+-Truyền dữ liệu trong PartialView:
++ Trong PartialView ProductItem thiết kế hiển thị thông tin các sản phẩm
+btn-sm: button cỡ nhỏ 
+btn-secondary: button màu xám 
+my-4: margin theo chiều y 4px
++ Giả sử truyền dữ liệu thông tin về 1 sản phẩm, partial view sử dụng dữ liệu đó để hiển thị nội dung ra
++ Tạo ra 1 Class Model để thiết lập thông tin sản phẩm: Product.cs 
++ Trong Index.html, tạo ra 1 số sản phẩm 
+@{
+    //Khởi tạo 1 đối tượng thông tin sản phẩm
+    var product1 = new Product() { Name = "Iphone X", Description = "Điện thoại Iphone của Apple,...", Price = 20000000 };
+    var product2 = new Product() { Name = "Samsung Note 7", Description = "Điện thoại Samsung của Hàn Quốc,...", Price = 8880000 };
+    var product3 = new Product() { Name = "Oppo", Description = "Điện thoại Oppo của Trung Quốc,...", Price = 5999000 };
+}
+-Truyền dữ liệu trong PartialView:
+C1: Chèn thông tin của 1 PartialView bằng thẻ tag
+    Để thiết lập Model cho ParialView sử dụng thược tính model"<TenBienTruyen>"
+    Sau đó trong PartialView _ProductItemPartial.cs cần cho thêm chỉ thị xác định xem Model thuộc kiểu gì
+    Model này có kiểu @model Product (Nạp namespace: @using SourceVietNam_Version04.Model;)
+    Lúc này có thể truy cập dữ liệu được truyền đến thông qua "@Model"
+C2: Gọi phương thức từ @Html.PartialAsync()
+    Để thiết lập Model cho ParialView sử dụng @await Html.PartialAsync("_ProductItemPartial", <tenbientruyen>)
+    Sau đó trong PartialView _ProductItemPartial.cs cần cho thêm chỉ thị xác định xem Model thuộc kiểu gì
+    Model này có kiểu @model Product (Nạp namespace: @using SourceVietNam_Version04.Model;)
+    Lúc này có thể truy cập dữ liệu được truyền đến thông qua "@Model"
+C3: Gọi phương thức từHtml.RenderPartialAsync("<TenPartialView>") trong khối code C# @{...}
+    Để thiết lập Model cho ParialView sử dụng @{await Html.RenderPartialAsync("_ProductItemPartial", <tenbientruyen>);}
+    Sau đó trong PartialView _ProductItemPartial.cs cần cho thêm chỉ thị xác định xem Model thuộc kiểu gì
+    Model này có kiểu @model Product (Nạp namespace: @using SourceVietNam_Version04.Model;)
+    Lúc này có thể truy cập dữ liệu được truyền đến thông qua "@Model"
+
+*@
+@using SourceVietNam_Version04.Model; 
+@model Product
+<div class="card my-4" style="width: 20rem"> 
+    <h2 class="card-header text-info">@Model.Name</h2>
+    <div class="card-body">
+        <p class="card-text">@Model.Description</p>
+        <p class="card-text">Giá: @Model.Price</p>
+        <a href="#" class="btn btn-secondary btn-sm" >Đặt hàng</a>
+    </div>
+</div>

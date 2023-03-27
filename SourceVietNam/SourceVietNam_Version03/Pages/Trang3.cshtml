@@ -1,0 +1,13 @@
+﻿@page
+@model SourceVietNam_Version03.Pages.Trang3Model
+@{
+    ViewData["Title"] = "POST 3";
+    Layout = "_Trang3"; //Gọi layout từ _Trảng.cshtml
+}
+
+<h1>Đây là @ViewData["Title"]</h1>@*Tạo ra Section NoiDungFooter được khai báo _MyLayout.cshtml*@
+
+@*Xử lý section chồng nhau*@
+@section NoiDungFooter{
+    <p>Footer - Trang 3 - Gọi section lồng nhau</p>
+}

@@ -1,0 +1,174 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+@addTagHelper *, SourceVietNam_Version05
+@*I. TAG HELPER
+Trong các file .cshtml, có thể viết các phần tử html sử dụng thẻ html đã biết
+Tuy nhiên có 1 số thẻ html có những thẻ HTML mà nó có thể gọi những thư viện lớp
+-->Qua đó, thì nó sinh ra mã HTML đầy đủ 
+VD: <a href=""></a>
+Thẻ a bình thường, tuy nhiên khi nó chạy trong _ViewImport thì nó có thêm @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+Đây là những thư viện lớp mà nó làm việc với thẻ html 
+Lúc này thẻ a này có thêm thuộc tính: asp-page thì thẻ <a/> lúc này là: AnchorTagHelper
+1. Anchor TagHelper này giúp cho việc: Phát sinh địa chỉ Url bằng cách thiết lập các thuộc tính
++ asp-controller: Controller (MVC) để phát sinh href của thẻ
++ asp-action: Action của controller
++ asp-route-{value}: Tham số của Route, ví dụ asp-route-id ...
++ asp-route Route để phát sinh href
++ asp-all-route-data: Thuộc tính gán giá trị bằng đối tượng kiểu Dictionary<string, string> để phát sinh phần query của url
++ asp-fragment: Phần fragment của URL
++ asp-area: Tên Area
++ asp-page: Tên trang Razor
++ asp-page-handler: Thiết lập handler của trang Razor
+Thực chất TagHelper là những thư viện lớp, gọi trong .cshtml với tên của những thẻ và thuộc tính tương ứng của TagHelper đó 
+Khi sử dụng TagHelper thì gọi thư viện lớp để sinh ra mã Html, tuy gọi thư viện lớp, nhưng hạn chế tối đa viết code C# 
+2. Input
++ Làm việc trên thẻ <input> với thuộc tính asp-for="@data"
++ @data là biểu thức, chỉ ra tên dữ liệu.
+--> Qua đó nó sinh ra phần tử HTML <input> với các thuộc tính sinh ra là: "type": phần tử sinh ra phụ thuộc vào kiểu data, 
+ví dụ như data là bool thì input có thuộc tính type="checkbox". Ngoài ra kiểu cũng xác định bởi các thuộc tính bổ sung như: [EmailAddress], [DataType(DataType.Time)] ...
+Phát sinh id dựa vào biểu thức asp-for
+3. Form
+asp-controller:         Tên của controller
+asp-action:          	Actionn trong controller
+asp-area:           	Tên Area
+asp-page: 	            Tên trang Razor
+asp-page-handler:	    Tên handler của Razor (OnGet, OnPost ..)
+asp-route:	            Tên route
+asp-route-{value}:	    Giá trị thành phần route
+asp-all-route-data:	    Giá trị xây dựng query action
+asp-fragment:	        fragment của action form
+--> Có thể sử dụng Input, Button để tạo ActionForm với các thuộc tính trên 
+4. Image
++ Làm việc trên thẻ <img> với thuộc tính asp-append-version="true" để thêm query v=xxxx vào địa chỉ ảnh.
++ Chú ý thuộc tính src phải trỏ đến một file tĩnh
++ ví dụ src="~/images/1.png", nếu vậy nếu asp-append-version="true" 
+  Thì mỗi phiên bản hình ảnh sẽ cache địa chỉ (phát sinh query v=xxx)
+5. Label:     Làm việc trên thẻ <label> với thuộc tính asp-for="@data"
+6. Link:      Làm việc trên thẻ <link>
+7. Select:    Làm việc trên thẻ <select>, 
+   ví dụ:
+   <select asp-for="Country" asp-items="Model.Countries"></select>
+8. Textarea : Làm việc trên thẻ <textarea> với thuộc tính asp-for="s"
+
+Ngoài việc sử dụng các TagHelper viết dưới dạng các thẻ HTML, nó còn có 1 thuộc tính Html
+Đây là đối tượng thuộc lớp HtmlHelper, bện trong nó cũng có rất nhiều phương thức. 
+Những phương thức này cũng giúp việc phart sinh các phần tử Html. VD: @this.Html.ActionLink(), Display(), ...
++ UserName: Tham số của @Html.Label / @Html.TextBox là thuộc tính của Model
+--> Kết quả cũng tương tự như TagHelper, nhiều trường hợp khi sử dụng TagHelper hay HtmlHelper thì kết quả tương tự nhau
+    Nếu được thì trong các View có thể sử dụng TagHelper, nó hạn chế tối đa trong việc gọi phương thức của C#
+
+Để sử dụng được TagHelper trong file cshtml thì phải nạp vào. Để nạp TagHelper, phải sử dụng 1 chỉ thị 
+@addTagHelper <TenTagHelperNapVap>
+C1: @removeTagHelper Microsoft.AspNetCore.Mvc.TagHelpers.AnchortagHelper : Loại bỏ TagHelper 
+C2: Muốn loại bỏ thẻ TagHelper có thể thêm dấu "!" trước thẻ TagHelper
+VD : <!a asp-page="ViewProduct" asp-route-name="ThuHuong">Xem thông tin</!a>
+
+Xây dựng TagHelper riêng thông qua chỉ thị: @addTagHelper *, SourceVietNam_Version05
+(Xem VD bên dưới)
+
+Trong file .cshtml, nếu được thì nên sử dụng TagHelper. Ngoài TagHelper thì có thể sử dụng "HtmlHelper"
+
+II. HTML HELPER
++ Raw(string)	                         Giữ nguyên thẻ HTML (không thực hiện encoding), vì mặc định khi xuất một giá trị (@value) thì nó sẽ encoding rồi xuất
++ Value(expression, format)	             Xuất giá trị tên expression (tên liên quan tới model) với chuỗi định dạng format
++ Encode(value)	                         Thực hiện Encode chuỗi value.
++ ActionLink	                         Tạo thẻ <a> cho các action của controller.
++ AntiForgeryToken	                     Tạo phần tử ẩn, nếu trong Form - khi form submit thì nó được kiểm tra, để đảm bảo form được gửi đến từ mã Html do ứng dụng phát sinh
++ BeginForm	                             Dựng HTML Form trong MVC
+                                         VD: @using (Html.BeginForm(FormMethod.Post))
+                                             {
+                                                // Các phầ tử
+                                             }
++ BeginRouteForm	                     Dựng HTML Form trong MVC, action theo Route
++ CheckBox / CheckBoxFor	             CheckBox(expression, isChecked, htmlAttributes)
+                                         Tạo phần tử Html <input> kiểu checkbox, expression chuỗi biểu thức phần tử Model
++ Display(expression)/ DislayFor	     Dựng HTML cho phần tử Model expression
++ DisplayName(expression)/DisplayNameFor Lấy tên expression, tên thiết lập bằng [Display]
++ DropDownList/ DropDownListFor	         DropDownList(expression, selectList, optionLabel, htmlAttributes) tạo phầ tử Select
+                                         VD: @Html.DropDownList("thanhpho", new SelectList(new string[] {"Hà Nội", "Sài Gòn"}));
++ Editor(expression)/ EditorFor	         Tạo control (phần tử input) cho expression (kiểu quy định type của input)
++ Hidden(expression)/ HiddenFor	         Tạo input có kiểu hidden
++ Label(expression)/ LabelFor	         Tạo phần tử <label>
++ ListBox/ ListBoxFor	                 Tạo html select - dùng giống DropDownList
++ PartialAsync	                         Dựng Html từ Partial, xem partial page, partial view
++ RenderPartialAsync	                 Dựng Html từ Partial, xem partial page, partial view
++ Password /PasswordFor	                 Tạo <input> nhập password
++ RadioButton(expression, value) / RadioButtonFor: 	Tạo <input> kiểu radiobutton
++ TextArea/ TextAreaFor	                 TextArea(expression, value, rows, columns, htmlAttributes) Tạo <textarea>
++ TextBox /TextBoxFor	                 TextBox(expression, value, format, htmlAttributes) Tạo <input> kiểu text
++ ValidationMessage	                     ValidationMessage (expression, message, htmlAttributes, tag) Trả về HTML thông báo lỗi kiểm tra Model
++ ValidationSummary	                     Trả về HTML phần tử ul, các thông báo lỗi kiểm tra Model
+
+*@
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+
+@*Thiếtlập thông tin trỏ đến trang ViewProduct
+  Nếu muốn truyền tham số qua ViewProduct, AnchorTagHelper sử dụng thêm thuộc tính: asp-route-tenthamso = "<GiaTri>"
+  Thì sẽ phát sinh ra địa chỉ Url có cấu trúc "/SanPham/{name?}"
+*@
+<a asp-page="ViewProduct" asp-route-name="ThuHuong">Xem thông tin</a>
+@*<!a asp-page="ViewProduct" asp-route-name="ThuHuong">Xem thông tin</!a>*@
+
+@*Trong Index.cshtml.cs, khai báo 1 thuộc tính  
+  [DisplayName("Tên Người dùng")]
+  public string UserName { get; set; }
+*@
+<form>
+    @*    
+    Sử dụng TagHelper dể phát sinh ra những control trong form HTML, bao gồm phần tử Label, Input,...
+    <label asp-for="UserName"></label>: Thì thể label này tương ứng với labelTagHelper, nó sẽ phát sinh ra label tương ứng cho phần tử được phát sinh cho thuộc tính UserName
+    <input asp-for="UserName" />: Tạo phần tử Input cho thuộc tính UserName của Model, thì lúc này Input tương ứng với InputTagHelper
+    *@
+    <label asp-for="UserName"></label>
+    <input asp-for="UserName" />
+    <hr/>
+
+    @*
+    Ngoài việc sử dụng các TagHelper viết dưới dạng các thẻ HTML, nó còn có 1 thuộc tính Html
+    Đây là đối tượng thuộc lớp HtmlHelper, bện trong nó cũng có rất nhiều phương thức.
+    Những phương thức này cũng giúp việc phát sinh các phần tử Html. VD: @this.Html.ActionLink(), Display(), ...
+    + UserName: Tham số của @Html.Label / @Html.TextBox là thuộc tính của Model
+    *@
+    @Html.Label("UserName")
+    @Html.TextBox("UserName")
+</form>
+
+@*Tạo Tag Helper riêng
+  - Để xây dựng 1 Class TagHelper, phải kế thừa lớp TagHelper: public class MyListTagHelper : TagHelper {...}
+  - Sau đó khai báo TagHelper làm việc với thẻ nào khai báo: [HtmlTargetElement("mylist")]
+  + Thuộc tính sẽ là list-title: Thiết lập tiêu đề
+  + Thuộc tính sẽ là list-items: Thiết lập danh sách tên
+  - Để xử lý sinh ra code html trong TagHelper riêng, ta dùng override phương thức nạp chồng phương thức tên "Process" với những tham số tương ứng
+  public override void Process(TagHelperContext context, TagHelperOutput output)
+  {
+        output.TagName = "ul";    //Sinh ra phần tử Html <ul>
+        output.TagMode = TagMode.StartTagAndEndTag; //Sinh ra có đóng thẻ <ul/>
+
+        output.Attributes.SetAttribute("class", "list-group"); //Sinh ra lớp css cho thẻ ul bằng cách truy cập set Attributes
+        output.PreElement.AppendHtml($"<h2>{ListTitle}</h2>"); //Chèm vào phía trước thẻ <ul></ul> là 1 òng có thẻ <h2>TieuDe</h2>
+
+        StringBuilder content = new StringBuilder();
+        foreach (var item in ListItems)
+        {
+             content.Append($@"<li class=""list-group-item"">{item}</li>"); //Bên trong thẻ <ul> là các phần <li>, sau đó duyệt qua danh sách tên các phần tử, add vào thẻ <li/>
+         }
+         output.Content.SetHtmlContent(content.ToString()); //Toàn bộ nội dung được thiết lập này là Content của <ul/>
+    }
+    Nạp vào file Index.cshtml TagHelper thông qua chỉ thị @addTagHelper *, SourceVietNam_Version05
+*@
+@{
+    var productlist = new List<String> {
+        "Tên Sản phẩm 1",
+        "Tên Sản phẩm 2",
+        "Tên Sản phẩm 3"
+     };
+}
+<mylist list-title="Danh sách sản phẩm" list-items="@productlist"></mylist>

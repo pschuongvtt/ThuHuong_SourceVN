@@ -2,7 +2,13 @@
 @model PrivacyModel
 @{
     ViewData["Title"] = "Privacy Policy";
+    Layout = "_MyLayout";
 }
 <h1>@ViewData["Title"]</h1>
 
 <p>Use this page to detail your site's privacy policy.</p>
+
+@*Tạo ra Section NoiDungFooter được khai báo _MyLayout.cshtml*@
+@section NoiDungFooter{
+    <p class="alert alert-danger">Nội dung footer của trang chính sách</p>
+}

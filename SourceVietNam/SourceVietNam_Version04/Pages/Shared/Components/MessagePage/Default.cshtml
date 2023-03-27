@@ -1,0 +1,26 @@
+﻿@using static SourceVietNam_Version04.Pages.Shared.Components.MessagePage.MessagePage;
+@*
+Khi gọi phương thức View(), có thể thiết lập Model truyền sang View Default01.cshtml theo cú pháp 
+return View<KieuDuLieu>(<GiaTri>)
+Sau đó, qua View Default01.cshtml gọi cú pháp: @model <KieuDuLieu>
+Để xuất nội dung của Model gọi : @Model
+*@
+
+
+@*MODEL NHẬN KIỂU class Mesage *@
+@model Message
+@{
+    Layout = "_Layout"; //Thiết lập Layout
+    ViewData["Title"] = @Model.title;
+}
+<div class="card m-4">
+    <div class="card-header bg-danger text-light">
+        <h4>@Model.title</h3>
+    </div>
+    <div class="card-body">
+        @Html.Raw(Model.htmlcontent)
+    </div>
+    <div class="card-footer">
+        Chuyển đến - <a href="@Model.urlredirect">@Model.urlredirect</a>
+    </div>
+</div>

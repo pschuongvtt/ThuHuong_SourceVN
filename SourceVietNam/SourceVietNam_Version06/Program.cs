@@ -1,6 +1,14 @@
-﻿using SourceVietNam_Version06.Services;
+using SourceVietNam_Version06.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using SourceVietNam_Version06.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("SourceVietNam_Version06ContextConnection") ?? throw new InvalidOperationException("Connection string 'SourceVietNam_Version06ContextConnection' not found.");
+
+builder.Services.AddDbContext<SourceVietNam_Version06Context>(options => options.UseSqlServer(connectionString));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<SourceVietNam_Version06Context>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();

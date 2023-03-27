@@ -5,9 +5,14 @@
 
   Ngoài ra còn có file _ViewImport.cshtml, tương tự như _ViewStart.cshtml cũng được tự động chèn vào phần đầu của các file khác
   Tuy nhiên, file này chỉ chấp nhận đưa vào các chỉ thị như:
-  + TagHelper: @addTagHelper
-  + Using: @using
-  + Inject: @inject
+    @addTagHelper
+    @inherits
+    @namespace
+    @inject
+    @model
+    @removeTagHelper
+    @tagHelperPrefix
+    @using
   ...
 *@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers;

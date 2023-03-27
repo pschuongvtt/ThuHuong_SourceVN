@@ -2,9 +2,54 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+    Layout = "_MyLayout";
 }
+
+@*LAYOUT TRONG RAZOR
+1. Layout: Là bố cục của trang footer, menu, content (hiển thị nội dung,...)
+2. Nội dung chi tiết của các trang mà ASP.NET dùng trong thư mục Shared, file _Layout cho các file Index, Privacy,...
+3. Thiết lập Layout theo cú pháp trong file .cshtml
+    @{
+        Layout = "_TenLayout"
+    }
+Lưu ý: Trang Index này khi nó chạy nó chèn _ViewStart.cshtml này trước có view _Layout, sau đó đến View Index thiết lập lại View vs _MyLayout
+       Mục đích đặt tên file _TenLayout.cshtml để cho endpoint .MapRazorPage() thì nó không tạo những file có _TenFile để trỏ đến endpoint của nó 
+4. Khi sử dụng Layout có chỉ thị hay được sử dụng, phương thức này xử lý bất đồng bộ
+Cú pháp: @await RenderSectionAsync("TenSection", required: false) trên _Layout
+         + required: false: Các trang thiết lập section có thể có hoặc không
+         + required: true: Các trang thiết lập section bắt buộc phải có
+         Khi gọi ở layout nào muốn sử dụng section khai báo: 
+Cú pháp: @section <TenSection> {
+         }
+Trong section này viết code C#,để xuất ra HTML và nội dung Section này được chèn vào khu vực @RenderSection  
+5. Tạo ra các Layout lồng nhau
+VD: 
+Sử dụng chung khu vực bài viết chia sẻ cùng cấu trúc _MyLayout tuy nhiên có thanh hiển thị bên trái và @Renderbody()
+Trang3.cshtml gọi layout _Trang3.cshtml
+Muốn chèn nội dung của layout _Trang3.cshtml chèn ngược lại từ _Layout chính là _MyLayout
+Bằng cách: Thiết lập gọi ngược lại layout _MyLayout.cshtml
+@{
+    Layout = "_MyLayout";
+}
+--> Khi truy cập vào Trang3.cshtml, thì toàn bộ nội dung nó sinh ra sẽ được chèn vào _Trang3.cshtml
+    Sau đó toàn bộ nội dung của _Trang3.cshtml được chèn vào nội dung của _MyLayout.cshtml
+    Sau đó lúc này mới trả về cho Client
+6. Tạo ra các section lồng nhau
+Khi truy cập vào Trang3.cshtml, thì toàn bộ nội dung nó sinh ra sẽ được chèn vào _Trang3.cshtml
+Trong đó _Trang3.cshtml có khai báo 1 section NoiDungFooter, Required: true thì Trang3.cshtml gọi tới phải khai báo section 
+Sau đó trong layout _Trang3.cshtml đang gọi layout _MyLayout.cshtml nên sẽ trả về nội dung section này vào _MyLayout
+@section NoiDungFooter {
+    //Render ra NoiDungFooter cho Trang3.cshtml gọi
+    @await RenderSectionAsync("NoiDungFooter", required: true)
+}
+*@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+@*Tạo ra Section NoiDungFooter được khai báo _MyLayout.cshtml*@
+@section NoiDungFooter{
+    <p>Nội dung footer của trang chủ</p>
+}

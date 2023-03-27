@@ -1,0 +1,190 @@
+﻿@page
+@model IndexModel
+@using SourceVietNam_Version04.Model;
+@{
+    //Truyền dữ liệu thông qua ViewData["key"] cho PartialView _Message.cshtml
+    ViewData["Title"] = "Home page";
+    ViewData["Content"] = "Bạn đang xem các sản phẩm mới";
+}
+@*
+I. PARTIAL VIEW
+- Partial View: Là cách thức chia nhỏ file .cshtml. 1 file .cshtml phức tạp có nhiều thành phần, có thể chia nhỏ ra thành các partial View
+               Những file .cshtml không có chỉ thị @page
+               Mục đích sử dụng partialView dùng để: 
+               + Chia nhỏ file cshtml phức tạp thành các thành phần nhỏ sau đó gộp chúng lại. 
+               + Những thành phần chung của nhiều file .cshtml có thể sử dụng lại tránh trùng lặp code 
+- PatialView: có tên theo tên của file .cshtml, có thể chèn vào 1 file cshtml khác 
+- Có 4 cách thức để chèn vào file .cshtml 
++ Cách 1: Sử dụng taghelper <partial name="_TenPartialView" />
++ Cách 2: Gọi phương thức HtmlHelper: @await Html.PartialAsync("<TenPartialView>"): Đây là phương thức bất đồng bộ nên phải có await, nó trả về 1 đối tượng "HtmlContent"
++ Cách 3: Gọi phương thức HtmlHelper: Html.RenderPartialAsync("<TenPartialView>"): Trả về "Task" tương đương trả về void trong phương thức đồng bộ. 
+          Phương thức này khi thực hiện nó chèn toàn bộ nội dung của Partial vào vị trí được gọi nó 
+          Phương thức này nó không trả về đối tượng nào vì vậy không thể nào gọi : "@Html.RenderPartialAsync("<TenPartialView>")"" mà phải gọi Html.RenderPartialAsync("<TenPartialView>") trong khối code C# @{..}
++ Cach 4: Truyền dữ liệu thông qua ViewData["key"]
+-Truyền dữ liệu trong PartialView: 
+C1: Chèn thông tin của 1 PartialView bằng thẻ tag
+    Để thiết lập Model cho ParialView sử dụng thược tính model"<TenBienTruyen>"
+    Sau đó trong PartialView _ProductItemPartial.cs cần cho thêm chỉ thị xác định xem Model thuộc kiểu gì
+    Model này có kiểu @model Product (Nạp namespace: @using SourceVietNam_Version04.Model;)
+    Lúc này có thể truy cập dữ liệu được truyền đến thông qua "@Model"
+C2: Gọi phương thức từ @Html.PartialAsync()
+    Để thiết lập Model cho ParialView sử dụng @await Html.PartialAsync("_ProductItemPartial", <tenbientruyen>)
+    Sau đó trong PartialView _ProductItemPartial.cs cần cho thêm chỉ thị xác định xem Model thuộc kiểu gì
+    Model này có kiểu @model Product (Nạp namespace: @using SourceVietNam_Version04.Model;)
+    Lúc này có thể truy cập dữ liệu được truyền đến thông qua "@Model"
+C3: Gọi phương thức từHtml.RenderPartialAsync("<TenPartialView>") trong khối code C# @{...}
+    Để thiết lập Model cho ParialView sử dụng @{await Html.RenderPartialAsync("_ProductItemPartial", <tenbientruyen>);}
+    Sau đó trong PartialView _ProductItemPartial.cs cần cho thêm chỉ thị xác định xem Model thuộc kiểu gì
+    Model này có kiểu @model Product (Nạp namespace: @using SourceVietNam_Version04.Model;)
+    Lúc này có thể truy cập dữ liệu được truyền đến thông qua "@Model"
+C4: Trong file .cshtml, có thể truy cập vào thuộc tính "ViewData"" và đọc dữ liệu truyền đến thông qua "key": VewData["key"]
+
+2. COMPONENT
+- Component ~ Partial View: Tương tự như PartialView, Là các view con được chèn vào file .cshtml. 
+                            Và đối tượng này có thể sử dụng kỹ thuật DI (Dependence Inject), inject những dịch vụ của hệ thống vào trong đối tượng component. Các đối tượng component sẽ sử dụng dịch vụ này
+                            Các component có thể tương đương với trang RazorPage nhỏ, có thể gọi là "Min Razor Page"
+- Trong file .cshtml để chèn 1 component thực hiện qua truy cập: @await Component.InvokeAsync()
+  Đây là phương thức xử lý bất đồng bộ dùng await. InvokeAsync("<TenComponent>", <Thamso1>, <Thamso2>, ..): Thực thi và chèn component nào vào
+  VD: @await Component.InvokeAsync("ProductBox"): Tên component là ProductBox. Nó tìm trên hệ thống component ProductBox và khởi tạo ra đối tượng đó thực thi và chèn kết quả trả về tại vị trí gọi "Invoke"
+- Thông thường 1 component được hình thành được khai báo mã nguồn .cs và có View được hiển thị .cshtml 
+- Trong cách thức tổ chức mã nguồn của component, nó được khai báo trong những thư mục: 
+Cách 1: /Views/{Controller Name}/Components/{View Component Name}/{View Name}
+Cách 2: /Views/Shared/Components/{View Component Name}/{View Name}
+Cách 3: /Pages/Shared/Components/{View Component Name}/{View Name}
+- Để sử dụng class là 1 component phải khai báo 1 phương thức có tên Invoke() trong class "ProductBox.cs"
++ Để sử dụng class này là 1 component phải khai báo 1 phương thức có tên Invoke() hoặc InvokeAsync()
++ Nếu phương thức Invoke có tham số: Invoke(object model)
++ Mặc dù có khai báo phương thức "Invoke()" nhưng vẫn chưa sử dụng được
+  -->C1: Phải khai báo cho lớp thêm 1 Attribute: "[ViewComponent]"
+  -->C2: Phải khai báo tên class có hậu tố ViewComponent: public class ProductBoxViewComponent{...}
+  -->C3: Khai báo lớp đó kế thừa từ ViewComponent: public class ProductBox: ViewComponent {...}
++ Lưu ý: Phương thức Invoke() phải trả về 1 trong 2 kiểu dữ liệu: "string" - "IViewComponentResult". Nếu trả về kiểu dữ liệu khác nó sẽ phát sinh lỗi System
++ Thông thường, phương thức Invoke() hoặc InvokeAsync() trả về IViewComponentResult là View().
+C1: Đối với phương thức View(), nó thi hành 1 file .cshtml 1 View, mặc định không thiết lập tham số gì, thì View thiết lập có tên mặc định "Default", mặc định thi hành View Default.cshtml
++ Có thể tự định nghĩa file "Default.cshtml", khai báo như 1 view bình thường
+C2: Điền thông tin View được trả về:  return View("<TenFileDuocTraVe>");
+4. Khi gọi phương thức View(), có thể thiết lập Model truyền sang View Default.cshtml theo cú pháp
+   return View<KieuDuLieu>(<GiaTri>)
+   Sau đó, qua View Default.cshtml gọi cú pháp: @model <KieuDuLieu>
+   Để xuất nội dung của Model gọi : @Model
+5. Lợi ích của việc sửa dụng Component tạo ra phương thức khởi tạo của nó.
+   Phương thức khởi tạo này có thể nhận những dịch vụ DI, sẽ được hệ thống tự động Inject vào
+
+Sau này, trong các PageModel, hay các Controller ở MVC, có thể gọi và trả về trực tiếp các "ViewComponent" hoặc "ActionView"
+VD: Trong PageModel "Index.cshtml.cs" có thể trả về 1 PartialView, thì PartialView nó trả về 1 đối tượng "PartialViewResult"
+    PartialViewResult: Nó được kế thừa từ "IActionResult", có thể khai báo phương thức OnGet() tra về "IActionResult"
+    public IActionResult OnGet()
+    {
+        //Trả về 1 Partial
+        return Partial("_Message");
+    }
+
+Đối với Component, ví dụ đối với Component ProductBox.cs thì cũng thi hành trả về nội dung Component trực tiếp ở trong các Handler, hoặc trong các action của Controller 
+//Khai báo trả về trực tiếp 1 Component
+public IActionResult OnGet()
+{
+     //Trả về 1 nội dung Component bằng cách gọi phương thức ViewComponent trong các Handler
+     return ViewComponent("ProductBox", false); //Truyền false: Xắp xếp giảm dần theo giá
+}
+
+VD: Dựng 1 component hiển thị thông báo trước khi chuyển hướng đến 1 trang nào đó: MessagePage 
+Mục đích component để hiển thị thông báo, hộp thông báo xuất hiện trong 1 khoảng tgian bao nhiêu giây thì nó sẽ chuyển hướng đến 1 địa chỉ mà ta thiết lập 
+Tạo ra file Defaut.cshtml để trả về View. Trong "Index.cshtml" gọi form để submit từ component "MessagePage"
+B1: Bấm gửi thì nó sẽ submit đến trang Index.
+B2: Trong Index.cshtml.cs, thiết lập 1 Handler trả về IActionResult OnPost(), khi truy vấn bằng phương thức Post thì phương thức này được thi hành
+    Khi Hander này thi hành, thì nó sẽ về 1 ViewComponent("MessagePage")
+
+*@
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+@*Khởi tạo 1 đối tượng thông tin sản phẩm*@
+@{
+    var product1 = new Product() { Name = "Iphone X", Description = "Điện thoại Iphone của Apple,...", Price = 20000000 };
+    var product2 = new Product() { Name = "Samsung Note 7", Description = "Điện thoại Samsung của Hàn Quốc,...", Price = 8880000 };
+    var product3 = new Product() { Name = "Oppo", Description = "Điện thoại Oppo của Trung Quốc,...", Price = 5999000 };
+
+}
+
+@*C1: Chèn thông tin của 1 PartialView bằng thẻ tag
+      Để thiết lập Model cho ParialView sử dụng thược tính model"<TenBienTruyen>"
+      Sau đó trong PartialView _ProductItemPartial.cs cần cho thêm chỉ thị xác định xem Model thuộc kiểu gì 
+      Model này có kiểu @model Product (Nạp namespace: @using SourceVietNam_Version04.Model;)
+      Lúc này có thể truy cập dữ liệu được truyền đến thông qua "@Model"
+*@
+<partial name="_ProductItemPartial" model="product1"/>
+
+@*C2: Gọi phương thức từ @Html.PartialAsync()
+      Để thiết lập Model cho ParialView sử dụng @await Html.PartialAsync("_ProductItemPartial", <tenbientruyen>)
+      Sau đó trong PartialView _ProductItemPartial.cs cần cho thêm chỉ thị xác định xem Model thuộc kiểu gì
+      Model này có kiểu @model Product (Nạp namespace: @using SourceVietNam_Version04.Model;)
+      Lúc này có thể truy cập dữ liệu được truyền đến thông qua "@Model"
+*@
+@await Html.PartialAsync("_ProductItemPartial", product2)
+
+
+@*C3: Gọi phương thức từHtml.RenderPartialAsync("<TenPartialView>") trong khối code C# @{...}
+      Để thiết lập Model cho ParialView sử dụng @{await Html.RenderPartialAsync("_ProductItemPartial", <tenbientruyen>);}
+      Sau đó trong PartialView _ProductItemPartial.cs cần cho thêm chỉ thị xác định xem Model thuộc kiểu gì
+      Model này có kiểu @model Product (Nạp namespace: @using SourceVietNam_Version04.Model;)
+      Lúc này có thể truy cập dữ liệu được truyền đến thông qua "@Model"
+*@
+@{
+    await Html.RenderPartialAsync("_ProductItemPartial", product3);
+}
+
+@*Để thiết lập 3 sản phẩm trên củng 1 dòng*@
+<div class="row bg-info">
+    <div class="col">
+        <partial name="_ProductItemPartial" model="product1" />
+    </div>
+    <div class="col">
+        @await Html.PartialAsync("_ProductItemPartial", product2)
+    </div>
+    <div class="col">
+        @{
+            await Html.RenderPartialAsync("_ProductItemPartial", product3);
+        }   
+    </div>
+</div>
+
+@*Xuất thông tin danh sách các sản phẩm trên một dòng*@
+<div class="row bg-warning mt-4">
+    @{
+        //Tạo ra biến danh sách các sản phẩm
+        var lsProduct = new List<Product>()
+    {
+    new Product(){Name = "SP 1", Description = "Mô tả thông tin SP1", Price = 20000000},
+    new Product(){Name = "SP 2", Description = "Mô tả thông tin SP2", Price = 30000000},
+    new Product(){Name = "SP 3", Description = "Mô tả thông tin SP3", Price = 46000000},
+    new Product(){Name = "SP 4", Description = "Mô tả thông tin SP4", Price = 50000000},
+    new Product(){Name = "SP 5", Description = "Mô tả thông tin SP5", Price = 60000000},
+    new Product(){Name = "SP 6", Description = "Mô tả thông tin SP6", Price = 22000000},
+    };
+        //Sử dụng vòng lặp foreach với mỗi sản phẩm product trong lsProduct thì sử dụng PartialView _ProductItemPartialView.cshtml để xuất thông tin
+        @foreach (var item in lsProduct)
+        {
+            //Sử dụng 1 trong 3 cách để gọi PartialView, mỗi lần xuất trên 1 cột của 1 dòng
+            <div class="col">
+                <partial name="_ProductItemPartial" model="item" />
+            </div>
+        }
+    }
+</div>
+
+@*C4: Truyền dữ liệu thông qua ViewData["key"]. Gọi layout partial _Message để in thông báo*@
+<partial name="_Message"/>
+
+@*Thực hiện truy cập vào Component*@
+@await Component.InvokeAsync("ProductBox", false)
+
+@*Tạo ra 1 thẻ form để submit*@
+<form method="post">
+    <label>Nhập tên của bạn: </label>
+    <input name="username"/>
+    @*Tạo Input loại hiển thì là Button*@
+    <input type="submit" value="Gửi"/> 
+</form>

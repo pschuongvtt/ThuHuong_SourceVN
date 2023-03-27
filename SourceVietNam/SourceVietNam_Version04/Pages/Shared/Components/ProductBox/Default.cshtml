@@ -1,0 +1,23 @@
+﻿@using SourceVietNam_Version04.Model;
+@*
+Khi gọi phương thức View(), có thể thiết lập Model truyền sang View Default01.cshtml theo cú pháp 
+return View<KieuDuLieu>(<GiaTri>)
+Sau đó, qua View Default01.cshtml gọi cú pháp: @model <KieuDuLieu>
+Để xuất nội dung của Model gọi : @Model
+*@
+
+@* MODEL NHẬN KIỂU STRING
+@model string
+<h3>Nội dung của ProductBox - IViewComponentResult - @Model</h3>
+*@
+
+@*MODEL NHẬN KIỂU List<Product>*@
+@model List<Product>
+<ul class="list-group">
+    @foreach(var product in Model)
+    {
+        <li class="list-group-item">
+            @product.Name (<strong>@product.Price</strong>)
+        </li>
+    }
+</ul>

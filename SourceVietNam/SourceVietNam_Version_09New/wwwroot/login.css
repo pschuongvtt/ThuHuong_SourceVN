@@ -1,0 +1,470 @@
+﻿
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+header {
+    height: 10%;
+}
+
+.container {
+    height: 90%;
+}
+
+.main-content {
+    /*height: 75%;*/
+    display: flex;
+    align-items: center;
+}
+
+main, #signup-form, #signin-form, #verify-email, #verify-success {
+    height: 100%;
+}
+
+.row > * {
+    padding-left: 0;
+}
+
+a:hover {
+    color: #BE123C;
+}
+
+.title-sign {
+    height: 9%;
+}
+
+.field-signin {
+    height: 50vh;
+}
+
+.field-signup {
+    /*height: 60vh;*/
+}
+
+#signin-form, #signup-form, #verify-email, #verify-success {
+    width: 100%;
+    margin: auto;
+}
+
+.logo-svn {
+    width: 20%;
+}
+
+.txt-login {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 18.2px;
+    color: #343844;
+}
+
+.label-user {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    text-align: right;
+}
+
+.input-user {
+    padding-left: 0.5rem;
+    padding-right: 0;
+}
+
+#check-agree {
+    display: none;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14.06px;
+}
+
+#signin-form .input-data, #signup-form .input-data, .select2-container {
+    /*border: 0.5px solid #BBBBBC;
+    border-color: #BBBBBC;*/
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 400;
+    color: #343844;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 38px;
+}
+
+.select2-container .select2-selection--single {
+    height: 41.5px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 40px;
+}
+
+.list-nationality .select2-container--default .select2-selection--single .select2-selection__arrow {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background: #ACACAE;
+    right: 0;
+    width: 31px;
+}
+
+#signin-form input::placeholder, #signup-form input::placeholder {
+    color: #BBBBBC;
+    font-style: italic;
+}
+
+#signin-form input:focus, #signup-form input:focus {
+    outline: none;
+}
+
+.forgot-pw {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 15.6px;
+    color: #343844;
+    bottom: -1.4rem;
+    text-decoration: none;
+    right: 0;
+}
+
+.alert-required {
+    /*display: none;*/
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14.06px;
+    bottom: -1.1rem;
+}
+
+.alert-incorrect {
+    /*display: none;*/
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14.06px;
+    right: 0;
+    top: -1.1rem;
+}
+
+.title-sign {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 39px;
+    color: #666666;
+}
+
+.select2-container input {
+    outline: none;
+}
+
+#login-submit {
+    border-radius: 30px;
+    color: #ffffff;
+    background: #BE123C;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 23.4px;
+    padding: 10px 61px;
+}
+
+    #login-submit:hover {
+        background: #9a1334;
+    }
+
+.grp-input {
+    padding: 10.8px 0;
+}
+
+    .grp-input input {
+        padding: 0 0.5em;
+    }
+
+.grp-input-icon {
+    padding: 3.7px 0;
+}
+
+.grp-input, .grp-input-icon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 1px solid #BBBBBC;
+    border-radius: 5px;
+    color: #343844;
+}
+
+    .grp-input-icon input {
+        outline: none;
+        border: none;
+        background: none;
+        font-size: 1em;
+        padding: 0.5em;
+        color: inherit;
+        flex: auto 1 1;
+        width: 100%;
+    }
+
+.grp-pw i, .grp-confirm-pw i {
+    color: #BBBBBC;
+    cursor: pointer;
+    margin-right: 0.5rem;
+}
+
+.select-icon i {
+    color: #343844;
+    cursor: pointer;
+    margin-right: 0.5rem;
+    background: #ACACAE;
+}
+
+.grp-pw i:hover, .grp-confirm-pw i:hover {
+    color: #9a1334;
+}
+
+.list-nation, .list-phonecode {
+    height: 160px;
+    overflow-y: auto;
+    display: none;
+    z-index: 10;
+    /*border: 0.5px solid #bcbbbb9e;*/
+    border-radius: 5px;
+}
+
+    .list-nation .list-group-item, .list-phonecode .list-group-item {
+        font-size: 14px;
+        line-height: 18.2px;
+        color: #343844;
+        cursor: pointer;
+    }
+
+        .list-nation .list-group-item:hover, .list-phonecode .list-group-item:hover {
+            color: #BE123C;
+        }
+
+        .list-nation .list-group-item.active, .list-phonecode .list-group-item.active {
+            color: #ffffff;
+            background: #BE123C;
+            border: none;
+        }
+
+    .list-nation::-webkit-scrollbar, .list-phonecode::-webkit-scrollbar {
+        display: none;
+    }
+
+
+.form-check-input:checked {
+    background-color: #BE123C;
+    border-color: #BE123C;
+}
+
+.form-check-label {
+    color: #343844;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16.40px;
+}
+
+.tbl-alert {
+    padding: 5px;
+    border: 1px solid #BBBBBC;
+    right: -20rem;
+    top: 0;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 15.6px;
+    display: none;
+    box-shadow: -2px 5px 8px rgba(0, 0, 0, 0.05);
+}
+
+    .tbl-alert::after {
+        content: "";
+        position: absolute;
+        margin: -6.5em -1.5em;
+        width: 0;
+        height: 0;
+        border-top: 12px solid transparent;
+        border-right: 13px solid #BBBBBC;
+        border-bottom: 12px solid transparent;
+    }
+
+#verify-email, #verify-success {
+    display: none;
+}
+
+#verify-email, .back-login {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 31px;
+}
+
+.message-send, .icon-verify, .resend-email, .sub-message, .message-success {
+    height: 25%;
+}
+
+.icon-verify {
+    font-size: 8rem;
+}
+
+#verify-email a, #verify-success a {
+    color: #BE123C;
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.message-success {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 39px;
+    color: #666666;
+}
+
+.verified {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 28px;
+}
+
+
+
+@media (min-width: 768px) and (max-width: 992px) {
+    .logo-svn {
+        width: 40%;
+    }
+
+    .title-sign {
+        font-size: 40px;
+    }
+
+    .alert-incorrect, .forgot-pw {
+        font-size: 14px;
+    }
+
+    #signin-form .input-data, #signup-form .input-data {
+        font-size: 16px;
+    }
+
+    #login-submit {
+        font-size: 20px;
+    }
+
+    /*SIGNUP*/
+    .tbl-alert {
+        right: 7rem;
+        top: -8.5rem;
+        font-size: 14px;
+        line-height: 20px;
+        display: unset;
+        background: #ffffff;
+        z-index: 1;
+    }
+
+        .tbl-alert::after {
+            content: "";
+            position: absolute;
+            margin: 0.4em 9.5em;
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 20px solid #BBBBBC;
+        }
+
+
+    .form-check-label {
+        font-size: 15px;
+        line-height: 20px;
+    }
+
+    #check-agree {
+        font-size: 14px;
+        line-height: 15px;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    .grp-pw {
+        position: unset !important;
+    }
+
+    .pw-signin {
+        position: relative;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .logo-svn {
+        width: 50%;
+    }
+
+    .title-sign {
+        font-size: 30px;
+    }
+
+    .label-user {
+        padding-right: 0;
+        padding-left: 0;
+        text-align: left;
+    }
+
+    .input-user {
+        padding-left: 0;
+    }
+
+    .grp-input {
+        padding: 8px 0;
+    }
+
+    .grp-input-icon {
+        padding: 0.7px 0;
+    }
+
+    .alert-incorrect, .forgot-pw {
+        font-size: 13px;
+    }
+
+    #signin-form .input-data, #signup-form .input-data {
+        font-size: 16px;
+    }
+
+    /*#login-submit {
+        font-size: 20px;
+    }*/
+
+
+    .field-signup {
+        height: unset;
+    }
+
+    .tbl-alert {
+        right: 0;
+        top: -8.5rem;
+        font-size: 14px;
+        line-height: 20px;
+        display: none;
+        background: #ffffff;
+        z-index: 1;
+    }
+
+        .tbl-alert::after {
+            content: "";
+            position: absolute;
+            margin: 0.4em 19.5em;
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 20px solid #BBBBBC;
+        }
+
+
+    .form-check-label {
+        font-size: 15px;
+        line-height: 20px;
+    }
+
+    #check-agree {
+        font-size: 14px;
+        line-height: 15px;
+    }
+}

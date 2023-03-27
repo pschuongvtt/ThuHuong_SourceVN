@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SourceVietnam</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/fontawesome-pro-6.0.0-beta1-web/css/all.min.css" rel="stylesheet" />
+    <link href="~/css/product.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/SourceVietnam.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        @*<nav>
+        <ul class="d-flex gray-normal">
+        <li class="me-2">
+        <img src="~/img/logo/logo-sourcevietnam.svg" style="max-width: 133px; max-height: 24px;" />
+        </li>
+        <li class="px-2" style="border-left: 1.5px solid #ECECEC;"><i class="fa-solid fa-store me-2"></i>Go to Seller Center</li>
+        <li class="ms-auto"><a><i class="fa-solid fa-user"></i></a> </li>
+        <li class="ml-head"><span class="me-1 color-svn fw-bold"><a>ENG</a></span>-<span class="ms-1"><a>VI</a></span></li>
+        <li class="ml-head"><span class="me-1 color-svn fw-bold"><a>USD</a></span>-<span class="ms-1"><a>VND</a></span></li>
+        </ul>
+        </nav>*@
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-page="/Index">SourceVietnam</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Product/ProductHomePage">Product</a>
+                        </li>
+                    </ul>
+                    @*Thêm thẻ Partial hiển thị View xử lý Login. Layout như thế nào hiển thị như vậy trên thanh narbar*@
+                    <partial name="/Areas/Identity/Pages/Account/_LoginPartial.cshtml" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container mt-5">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted mt-5">
+        <div class="container">
+            &copy; 2023 - SourceVietnam - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
